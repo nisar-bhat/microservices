@@ -4,9 +4,9 @@ plugins {
 	id 'java'
 }
 
-group = 'com.nisar.api'
+group = 'com.nisar.util'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
@@ -18,11 +18,11 @@ ext {
 	
 dependencies {
     implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
+    implementation project(':api')
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'org.springdoc:springdoc-openapi-common:1.5.9'
-  //  implementation 'org.springdoc:springdoc-openapi-webflux:1.5.9'
 }
+ 
 jar{
 	enabled ='false'
 	}
