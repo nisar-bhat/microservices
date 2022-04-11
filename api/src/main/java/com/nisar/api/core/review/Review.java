@@ -1,7 +1,7 @@
 package com.nisar.api.core.review;
 
 public class Review {
-	private int productId;
+	  private int productId;
 	  private int reviewId;
 	  private String author;
 	  private String subject;
