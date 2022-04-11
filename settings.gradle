@@ -1,0 +1,4 @@
+include ':api'
+include ':util'
+include 'core:product-service'
+

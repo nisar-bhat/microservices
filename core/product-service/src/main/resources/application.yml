@@ -1,0 +1,67 @@
+server.port: 8082
+server.error.include-message: always
+
+spring:
+  data:
+    mongodb:
+      uri:  mongodb://localhost:27018/product-db
+      database: product-db
+
+  cloud:
+    function:
+      definition: messageProcessor
+    stream:
+      default-binder: rabbit
+      bindings:      
+       messageProcessor-in-0:
+        destination: products
+        group: productsGroup
+        consumer:
+          maxAttempts: 3
+          backOffInitialInterval: 500
+          backOffMaxInterval: 1000
+          backOffMultiplier: 2.0
+
+      kafka:
+          bindings:
+            messageProcessor-in-0.consumer:
+            enableDlq: true
+          binder:
+            brokers: 127.0.0.1
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+logging:
+  level:
+    root: INFO
+    com.nisar: DEBUG
+    org.springframework.data.mongodb.core.ReactiveMongoTemplate: DEBUG
+
+management.endpoint.health.show-details: "ALWAYS"
+management.endpoints.web.exposure.include: "*"
+
+#Docker configurations
+---
+spring.config.activate.on-profile: docker
+
+server.port: 8080
+
+spring:
+  data:
+    mongodb:
+      uri:  mongodb://localhost:27018/product-db
+      database: product-db
+
+  rabbitmq:
+    host: rabbitmq
+
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers:
+          -  localhost:9092
+#Docker ends
+ 
